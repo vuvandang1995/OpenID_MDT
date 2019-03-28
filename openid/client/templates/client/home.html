@@ -1,0 +1,19 @@
+{% extends 'client/base.html' %}
+{% load staticfiles %}
+{% block title %} Client {% endblock %}
+{% block css %} {% endblock %}
+{% block content %}
+
+<div class="clearfix"></div>
+{% csrf_token %}
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $('#left-menu').find('li').removeClass('selected')
+            $('.vm').addClass('selected')
+        })
+    </script>
+
+    <script src="{% static 'js/client/home.js' %}"></script>
+{% endblock %}

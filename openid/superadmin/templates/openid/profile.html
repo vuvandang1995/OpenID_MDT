@@ -1,0 +1,48 @@
+{% extends "openid/base.html" %}
+{% load staticfiles %}
+{% block content %}
+{% csrf_token %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-title">
+                <h4>Change password</h4>
+            </div>
+            <div class="card-body" style="margin-left:2em;margin-right:2em;">
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">Old password</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="password" name="pass1" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">New password</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="password" name="pass2" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label class=" form-control-label">Confirm new password</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="password" name="pass3" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <button class="btn btn-primary btn-block" id="change">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/superadmin/profile.js' %}"></script>
+{% endblock %}

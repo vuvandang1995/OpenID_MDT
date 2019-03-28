@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="{% static 'css/bootstrap4.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
+    {% block css %} {% endblock %}
+</head>
+
+<body style="cursor: auto;">
+    <!-- mobile menu -->
+    <div class="mobilemenu showonmobile">
+        <div class="container" style="text-align: center">
+            <button class="expand-menu" onclick="$('#left-menu').toggle()" type="button"><span></span></button>
+            <div class="logo">
+                <a href="/"><img src="{% static 'images/logo.png' %}" style="height: 50px"></a>
+            </div>
+            <div class="box-admin">
+                <ul>
+                    <li>
+                        <a onclick="$('.popmenu').toggle()"><i class="glyphicon glyphicon-user"></i></a>
+                        <div class="popmenu popmenu-right">
+                            <ul>
+                                <li>
+                                    <a href="" style="border-bottom: 1px solid #e5e5e5;"><i class="fa fa-sign-in"></i>Logout</a>
+                                </li>
+                                <li>
+                                    <a href=""><i class="fa fa-edit"></i>Hoá don</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- end -->
+    <!-- header -->
+    <div id="header">
+        <div id="lower-header">
+            <a href="{% url 'client:home' %}" style="float: left;">
+                <div style="margin-top: 5px;padding-left: 135px;"><img src="{% static 'images/openid.png' %}"></div>
+            </a>
+            <div id="welcome">
+                <span><span class="menu-trigger"><span style="font-weight:normal">Hello, </span>{{ content }}</span></span>
+                <div class="dropdown-menu-absolute">
+                    <a href="{% url 'client:logout' %}">Logout</a>
+                </div>
+                <div class="sprite triangle-os" style="font-size: 11px;"></div>
+            </div>
+           
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div><!-- end -->
+    <!-- body -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/validate-bootstrap.jquery.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/app.js' %}" type="text/javascript"></script>
+    <script>
+        var userName = '{{ user.username }}';
+        var opsSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/' + userName + '/');
+
+        opsSocket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            var message = data['message'];
+            if (message == 'Da xoa xong'){
+                setTimeout(function(){
+                    $('#maintable').load(location.href + "_data");
+                }, 8000);
+            }else{
+                setTimeout(function(){
+                    $('#maintable').load(location.href + "_data");
+                }, 500);
+            }
+            /*$("#success").html(message).removeClass("hide").hide().fadeIn()
+            setTimeout(function(){
+                $("#success").fadeOut("slow");
+            }, 6000);*/
+        };
+    </script>
+    {% block js %} {% endblock %}
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('#top-nav a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+                $('#top-nav a').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            // $('#left-menu a').click(function (e) {
+            //     e.preventDefault()
+            //     $("#left-menu li").removeClass('selected')
+            //     console.log($(this).parent('li'))
+            //     $(this).parent('li').addClass('selected')
+            // })
+        });
+    </script>
+
+</body>
+
+</html>
