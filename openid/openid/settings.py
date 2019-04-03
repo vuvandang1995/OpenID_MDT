@@ -89,9 +89,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'openid',
-        'USER': 'openid',
+        'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '192.168.40.228',
+        'HOST': 'openid-mysql',
         'PORT': '3306',
     }
 }
@@ -141,5 +141,5 @@ EMAIL_HOST_PASSWORD = 'meditech2018'
 EMAIL_PORT = 587
 
 # CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_BROKER_URL = 'redis://localhost'
-CELERY_RESULT_BACKEND = 'redis://localhost'
+CELERY_BROKER_URL = 'redis://127.0.0.1'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1'
