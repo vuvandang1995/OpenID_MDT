@@ -77,7 +77,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(os.getenv('REDIS_HOST', '127.0.0.1'), 6379)],
         },
     },
 }
@@ -88,10 +88,10 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'openid',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': 'openid-mysql',
+        'NAME': os.getenv('DB_NAME', 'openid'),
+        'USER': os.getenv('DB_USER', 'openid'),
+        'PASSWORD': os.getenv('DB_PASS', '123456'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': '3306',
     }
 }
@@ -141,5 +141,5 @@ EMAIL_HOST_PASSWORD = 'meditech2018'
 EMAIL_PORT = 587
 
 # CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_BROKER_URL = 'redis://127.0.0.1'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://127.0.0.1')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://127.0.0.1')
