@@ -11,6 +11,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker # This step helps you avoid the Docker-in-Docker problem
+          docker_layer_caching: true 
       - run:
           name: Build Docker for Develop
           command: |
@@ -18,8 +19,8 @@ jobs:
             echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin $DOCKER_REGISTRY_HOST            
             docker build --target webapp -t ${IMAGE_REPOSITORY_WEBAPP}:${IMAGE_TAG} .
             docker build --target app -t ${IMAGE_REPOSITORY_API}:${IMAGE_TAG} .
-            docker push ${IMAGE_REPOSITORY_WEBAPP}:${IMAGE_TAG}
             docker push ${IMAGE_REPOSITORY_API}:${IMAGE_TAG}
+            docker push ${IMAGE_REPOSITORY_WEBAPP}:${IMAGE_TAG}
 
             
 workflows:
