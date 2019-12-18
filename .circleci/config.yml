@@ -1,16 +1,11 @@
 version: 2
 jobs:
-# # # DO NOT TOUCH THIS AREAS, THIS FIXED CICD PROCESS # # #
-
-# # # # # # 
-# Dockerize 
-# # On the master branch
   master:dockerize:
     docker:
       - image: circleci/python:3.7
     steps:
       - checkout
-      - setup_remote_docker # This step helps you avoid the Docker-in-Docker problem
+      - setup_remote_docker:
           docker_layer_caching: true 
       - run:
           name: Build Docker for Develop
