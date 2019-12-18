@@ -1,4 +1,4 @@
-FROM python:3-alpine as app
+FROM python:3 as app
 EXPOSE 5000
 WORKDIR /openid
 ADD requirements.txt /openid/
