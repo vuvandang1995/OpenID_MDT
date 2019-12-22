@@ -1,0 +1,31 @@
+stages:
+  - dockerize
+
+variables:
+  IMAGE_REPOSITORY_API: dangvv1995/openid
+  IMAGE_REPOSITORY_WEBAPP: dangvv1995/openid_nginx
+  
+# Dockerize
+.dockerize_template: &dockerize
+  stage: dockerize
+  image: docker:19.03.1
+  before_script:
+    - export IMAGE_TAG=${CI_COMMIT_REF_NAME:9}-${CI_COMMIT_SHORT_SHA}
+  script:
+    - echo $DOCKER_TOKEN | docker login --password-stdin -u $DOCKER_USERNAME $DOCKER_REGISTRY_HOST
+    - echo building docker image ${IMAGE_REPOSITORY}:${IMAGE_TAG}
+    - docker build --target webapp --build-arg IMAGE_TAG_ARG=${IMAGE_TAG} -t ${IMAGE_REPOSITORY_WEBAPP}:${IMAGE_TAG} .
+    - docker build --target app --build-arg IMAGE_TAG_ARG=${IMAGE_TAG} -t ${IMAGE_REPOSITORY_API}:${IMAGE_TAG} .
+    - docker push ${IMAGE_REPOSITORY_API}:${IMAGE_TAG}
+    - docker push ${IMAGE_REPOSITORY_WEBAPP}:${IMAGE_TAG}
+  tags:
+   - ci-general
+
+# Dockerize on the master branch where the tag of docker is m-SHA1
+dockerize:develop:
+  <<: *dockerize
+  only:
+    refs:
+      - master
+  before_script:
+    - export IMAGE_TAG=m-${CI_COMMIT_SHORT_SHA}

@@ -1,4 +1,9 @@
-FROM python:3 as app
+FROM python:3-alpine as app
+RUN apk update && apk add \
+                gcc \
+                mariadb-dev \
+                libc-dev \
+                libffi-dev
 EXPOSE 5000
 WORKDIR /openid
 ADD requirements.txt /openid/

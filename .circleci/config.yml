@@ -2,7 +2,7 @@ version: 2
 jobs:
   master:dockerize:
     docker:
-      - image: circleci/python:3
+      - image: circleci/python:3.5
     steps:
       - checkout
       - setup_remote_docker
